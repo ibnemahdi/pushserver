@@ -1,38 +1,33 @@
 const express = require('express');
 var bodyParser = require('body-parser');
+var service = require('./messageService');
+var cors = require('cors')
+
 
 const app = express();
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(cors())
+app.use(bodyParser.urlencoded({extendxed:false}));
 app.use(bodyParser.json());
 
-const port = 80;
+const port = 8080;
 
-
-const data = [
-    {
-        name:'mahdi',
-        age:20,
-        city:'Oshkosh'
-
-    },
-    {
-        name:'popo',
-        age:28,
-        city:'Chicago'
-
-    }
-]
 
 app.listen(port, ()=>{
     console.log(`listing on port:${port}`);
 });
 
 app.post("/",(req,res)=>{
-    console.log(req.body);
-    res.json({message:"ok"});
+    const mil_seconds = req.body.delay ?? 0;
+    delay(mil_seconds).then(function() {
+        service.sendFcmMessage(req.body.token,req.body.type);
+    });
+    res.json({status:"ok"});
 });
 
 app.get("/",(req,res)=>{
-    //res.setHeader('Content-Type', 'application/json');
     res.send(data);
 });
+
+function delay(t, v) {
+    return new Promise(resolve => setTimeout(resolve, t, v));
+}
