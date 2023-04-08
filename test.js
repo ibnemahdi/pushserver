@@ -4,3 +4,4 @@ const message = `${faker.name.fullName()} from ${faker.name.jobArea()} assigned 
 console.log(message);
 
 
+
