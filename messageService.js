@@ -107,11 +107,14 @@ function getAccessToken() {
 
   }
   function buildCommonMessage(token) {
+
+  const name =   faker.name.fullName();
+  const orderId = faker.address.zipCode('####');
   const customData = 
   {
        "messageType":"order",
-       "module":"order",
-       "assigned_by":"John Doe"
+       "order":orderId,
+       "assigned_by":name
   }
 
     return {
@@ -120,7 +123,7 @@ function getAccessToken() {
         
         'notification': {
           'title': 'A new Order has been assigned to you',
-          'body': `${faker.name.fullName()} from ${faker.name.jobArea()} assigned a new order:${faker.address.zipCode('####')}, Job location is ${faker.address.streetAddress()}. Please email him ${faker.internet.email()} in case of any questions.`,
+          'body': `${name} from ${faker.name.jobArea()} assigned a new order:${orderId}, Job location is ${faker.address.streetAddress()}. Please email him ${faker.internet.email()} in case of any questions.`,
           },
           'data':customData
           
